@@ -19,15 +19,15 @@
 <script>
 var sjcl = require(['js/sjcl.js'])
 var pub = getCookie("pubkey")
-var sec = getCookie("privkey")
-console.log(sec)
+var sec_encrypted = getCookie("privkey")
+console.log(sec_encrypted)
 
 $(document).ready(function () {
     
     
     $("#encrypt").click(function() {
         var password = $("#password").val()
-        sec = sjcl.decrypt(password, sec)
+        var sec = sjcl.decrypt(password, sec_encrypted)
         console.log(sec)
         // Unserialized private key:
         sec = new sjcl.ecc.elGamal.secretKey(
