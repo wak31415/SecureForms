@@ -1,4 +1,9 @@
 <?php
+
+    $myfile = fopen("config/root_password", "r") or die("Unable to open file!");
+    $password = fgets($myfile);
+    fclose($myfile);
+
     ob_start();
     session_start();
 
