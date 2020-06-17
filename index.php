@@ -1,7 +1,6 @@
 <?php
     include("includes/header.php");
     include("includes/classes/User.php");
-    include("includes/classes/Post.php");
     include("includes/handlers.php");
 
     $user = new User($con, $userLoggedIn);
@@ -11,7 +10,6 @@
 ?>
 
 <label for="password">Your account password:</label>
-<input type="password" id="password">
 <button id="encrypt" type="submit">Get secret message!</button>
 <p id="decrypted_message"></p>
 
@@ -20,28 +18,23 @@
 var sjcl = require(['js/sjcl.js'])
 var pub = getCookie("pubkey")
 var sec_encrypted = getCookie("privkey")
-console.log(sec_encrypted)
+var privkey_password = getCookie("privkey_password")
 
 $(document).ready(function () {
     
     
     $("#encrypt").click(function() {
-        var password = $("#password").val()
-        var sec = sjcl.decrypt(password, sec_encrypted)
-        console.log(sec)
+        var sec = sjcl.decrypt(privkey_password, sec_encrypted)
         // Unserialized private key:
         sec = new sjcl.ecc.elGamal.secretKey(
             sjcl.ecc.curves.c256,
             sjcl.ecc.curves.c256.field.fromBits(sjcl.codec.base64.toBits(sec))
         )
-        console.log(sec)
 
         var ct = getCookie("secret_msg")
         var pt = sjcl.decrypt(sec, ct)
-        console.log(ct)
-        console.log(pt)
         
-        $("#decypted_message").text(pt)
+        $("#decrypted_message").text(pt)
     });
 });
 </script>

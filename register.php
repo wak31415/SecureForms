@@ -29,7 +29,7 @@
 <h2>Log In</h2>
 
 <div id="login">
-    <form action="register.php" method="POST">
+    <form action="register.php" id="loginform" method="POST">
         <div class="row">
             <div class="input-field col s12">
             <input name="log_email" id="email" type="email" class="validate" value="<?php

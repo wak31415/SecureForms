@@ -19,7 +19,7 @@
         $password = strip_tags($_POST['reg_password']);
         $password2 = strip_tags($_POST['reg_password2']);
 
-        $privkey = $_POST['privkey'];
+        $privkey = $_POST['privkey']; // already encrypted
         $pubkey = $_POST['pubkey'];
 
         $secret_msg = $_POST['secret_msg'];
@@ -53,7 +53,7 @@
         }
 
         if(empty($error_array)) {
-            $password = md5($password); // encrypt password before sending to database
+            $password = password_hash($password, PASSWORD_DEFAULT); // encrypt password before sending to database
             registerUser($con, $em, $password, $privkey, $pubkey, $secret_msg);
         }
     }
