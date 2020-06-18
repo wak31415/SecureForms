@@ -53,7 +53,6 @@
         }
 
         if(empty($error_array)) {
-            $password = password_hash($password, PASSWORD_DEFAULT); // encrypt password before sending to database
             registerUser($con, $em, $password, $privkey, $pubkey, $secret_msg);
         }
     }
