@@ -62,10 +62,14 @@ $(document).ready(function () {
         addFormElement(question);
     }
 
-    $("input").change(function(){$("#save_status").text("Status: unsaved changes")})
+    $("input").change(function(){
+        $("#save_status").text("Status: unsaved changes")
+        .addClass("unsaved");
+    })
     
     $(".add_new_btn").click(function() {
         $("#save_status").text("Status: unsaved changes")
+        .addClass("unsaved");
         addFormElement(getElementObj(this));
     });
 
@@ -78,7 +82,8 @@ $(document).ready(function () {
         let formData = new FormData(document.forms.save_form_data);
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
-            $("#save_status").text("Status: " + this.responseText);
+            $("#save_status").text("Status: " + this.responseText)
+            .removeClass("unsaved");
             // alert(this.responseText);
         }
         xmlhttp.open("POST","includes/form_handlers/save_form.php?survey_id="+survey_id);

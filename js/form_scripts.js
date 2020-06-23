@@ -25,7 +25,11 @@ function addFormElement(element) {
     var remove_btn = document.createElement("BUTTON");
     remove_btn.innerText = "x Remove Element";
     remove_btn.class = "remove_element";
-    $(remove_btn).click(function() {$(this).parent().remove();});
+    $(remove_btn).click(function() {
+        $(this).parent().remove();
+        $("#save_status").text("Status: unsaved changes")
+        .addClass("unsaved");
+    });
     $(container).append(remove_btn);
     $(container).append(document.createElement("BR"));
 

@@ -26,3 +26,9 @@
     width: 10%;
     color: red;
 }
+
+#save_status { color: green; }
+
+#save_status.unsaved {
+    color: red;
+}
