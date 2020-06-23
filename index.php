@@ -15,16 +15,7 @@
         'path' => '/',
         'samesite' => 'Strict',
     ]);
-    setcookie("secret_msg", $user->getSecretMessage(), [
-        'expires' => time()+86400*30,
-        'path' => '/',
-        'samesite' => 'Strict',
-    ]);
 ?>
-
-<h2>Encryption tests</h2>
-<button id="decrypt" type="submit">Get secret message!</button>
-<p id="decrypted_message"></p>
 
 <h2>Your Forms:</h2>
 <ul id="form_list"></ul>
@@ -83,15 +74,6 @@ $(document).ready(function () {
         form_item.appendChild(form_link);
         document.getElementById('form_list').appendChild(form_item);
     }
-        
-    $("#decrypt").click(function() {
-        // Unserialized private key:
-        
-        var ct = getCookie("secret_msg")
-        var pt = sjcl.decrypt(sec, ct)
-        
-        $("#decrypted_message").text(pt)
-    });
     
     $("#create_new_form").submit(function () {
         var key = sjcl.ecc.elGamal.generateKeys(256).sec.get()
