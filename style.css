@@ -12,12 +12,13 @@
     margin: 10px 0 10px 0;
 }
 
-.form_element input {
+.form_element input.form_text {
     box-sizing: border-box;
     width: 100%;
 }
 
-.option_container input {
+.option_field {
+    box-sizing: border-box;
     width: 90%;
 }
 
@@ -31,4 +32,16 @@
 
 #save_status.unsaved {
     color: red;
+}
+
+table {
+    border: 1px solid black;
+    border-spacing: 10px;
+}
+thead {
+    text-align: left;
+}
+
+tbody tr:hover {
+    background-color: rgb(241, 241, 241);
 }

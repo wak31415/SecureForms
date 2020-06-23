@@ -16,7 +16,8 @@ function getElementObj(add_btn) {
     return element;
 }
 
-function addFormElement(element) {
+// editable form fields for form creators
+function addFormElementAdmin(element) {
     var container = document.createElement("DIV");
     $(container).appendTo("#form_elements")
     .addClass("form_element")
@@ -99,7 +100,7 @@ function createOptionField(form_el_container,val,trigger_field=false) {
 
 function updateFormData() {
     var name_counter = 0;
-    var data = {"elements":[], "params":{}}
+    var data = {"name":"Placeholder","elements":[], "params":{}}
     $("#form_elements").children("div").each(function(){
         var element = {};
         element.name = (name_counter++).toString();
@@ -122,4 +123,43 @@ function updateFormData() {
         data.elements.push(element);
     });
     return data;
+}
+
+// add form elements for users to fill out (not editable)
+function addFormElement(element) {
+    var container = document.createElement("DIV");
+    $(container).appendTo("#form_elements")
+    .addClass("form_element");
+    
+    $("<p></p>").addClass("form_question")
+    .appendTo(container)
+    .text(element.question);
+
+    // $(container).append(document.createElement("BR"));
+    
+    switch (element.type) {
+        case "checkbox":
+        case "radio":
+            for(opt in element.options) {
+                var id = element.name + "_" + opt.toString();
+                var value = element.options[opt];
+                $("<input>").attr({"type":element.type,
+                                   "name":element.name,
+                                   "id":id,
+                                   "value":id})
+                .appendTo(container);
+                $("<label>").attr({"for":id})
+                .text(value)
+                .appendTo(container);
+                $(container).append(document.createElement("BR"));
+            }
+            
+            break;
+    
+        case "text":
+            $("<input>").attr({"type":element.type, "name":element.name})
+            .appendTo(container);
+        default:
+            break;
+    }
 }

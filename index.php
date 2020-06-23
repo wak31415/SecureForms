@@ -79,8 +79,8 @@ $(document).ready(function () {
         var key = sjcl.ecc.elGamal.generateKeys(256).sec.get()
         key = sjcl.codec.base64.fromBits(key)
         key = key.replace(/[^a-zA-Z0-9]/g,'')
-
-        var data = {"elements":[],"params":{}}
+        
+        var data = {"name":$("#form_name").val(),"elements":[],"params":{}}
         
         $("#form_data").val(sjcl.encrypt(key, JSON.stringify(data)))
         

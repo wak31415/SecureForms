@@ -5,9 +5,10 @@ The forms will be saved as JSON in the following format:
 ```json
 
 form = {
+    "name": "This is a cool form",
     "elements": [
         {
-            "name": "some_name",
+            "name": auto generated,
             "type": ["radio","checkbox","text","longtext",...],
             "required": [true, false],
             "question": "Sample Question?",

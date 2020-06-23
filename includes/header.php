@@ -23,6 +23,8 @@
     <script src="js/cookie_handlers.js"></script>
     <script src="js/sjcl.js"></script>
     <script src="js/form_scripts.js"></script>
+    <script src="js/general_scripts.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="style.css">
     <title>SecureForms</title>
 </head>

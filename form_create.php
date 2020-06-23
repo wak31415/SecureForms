@@ -7,8 +7,11 @@
     $survey = new Survey($con, $survey_id);
 ?>
 
+<p id="view_results"></p>
+
 <div class="form_container">
     <p id="save_status">Status: saved</p>
+    <button id="copy_to_clipboard">Share Form</button>
     <div id="form_elements"></div>
 
     <div class="add_new">
@@ -58,9 +61,16 @@ $(document).ready(function () {
     data = sjcl.decrypt(key, data);
     data = JSON.parse(data);
 
+    // build form elements
     for (question of data.elements) {
-        addFormElement(question);
+        addFormElementAdmin(question);
     }
+
+    // create link for viewing results
+    var form_link = document.createElement('A');
+    form_link.href = "results.php?survey_id="+survey_id;
+    form_link.innerText = "View Results";
+    $("#view_results").append(form_link);
 
     $("input").change(function(){
         $("#save_status").text("Status: unsaved changes")
@@ -70,7 +80,7 @@ $(document).ready(function () {
     $(".add_new_btn").click(function() {
         $("#save_status").text("Status: unsaved changes")
         .addClass("unsaved");
-        addFormElement(getElementObj(this));
+        addFormElementAdmin(getElementObj(this));
     });
 
 
@@ -88,6 +98,11 @@ $(document).ready(function () {
         }
         xmlhttp.open("POST","includes/form_handlers/save_form.php?survey_id="+survey_id);
         xmlhttp.send(formData);
+    });
+
+    $("#copy_to_clipboard").click(function(){
+        var link = "localhost/SecureForms/form.php?survey_id="+survey_id+"#key="+key;
+        navigator.clipboard.writeText(link);
     });
     
 });
