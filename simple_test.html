@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type = "text/javascript"
+        src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"> -->
+    <script src="js/form_scripts.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+
+<div class="form_container">
+    <div id="form_elements">
+    
+        <!-- <input type="text" class="option_text" name="0" id="some_val_0"> -->
+        
+    </div>
+    <div class="add_new">
+        <input class="add_new_btn" type="button" value="+ Checkbox" id="add_checkbox">
+        <input class="add_new_btn" type="button" value="+ Radio" id="add_radio">
+        <input class="add_new_btn" type="button" value="+ Text" id="add_text">
+        <input type="button" value="Save Form" id="save">
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function () {
+
+    $(".add_new_btn").click(function() {addFormElement(getElementObj(this))});
+    $("#save").click(updateFormData);
+});
+</script>
+
+</body>
+</html>

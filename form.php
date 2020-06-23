@@ -6,15 +6,18 @@
 
     $surveyid = $_GET['survey_id'];
     $survey = new Survey($con, $surveyid);
-    echo $survey->data['data'];
 ?>
 
 
 
 <script>
-var sjcl = require(['js/sjcl.js'])
-const params = new URLSearchParams(window.location.search)
-const key = params.get('key')
+// var sjcl = require(['js/sjcl.js'])
+
+var parsedHash = new URLSearchParams(
+    window.location.hash.substr(1) // skip the first char (#)
+);
+
+var key = parsedHash.get('key');
 
 <?php
     $data = $survey->data['data'];
@@ -24,10 +27,12 @@ const key = params.get('key')
 $(document).ready(function () {
     // decrypt form data
     // sjcl.decrypt(key, data)
-
+    
     // construct form from JSON
     console.log(data)
-    data = JSON.parse('{ "name":"John", "age":30, "city":"New York"}')
+    console.log(key)
+    data = sjcl.decrypt(key, data)
+    data = JSON.parse(data)
     console.log(data)
     
 });

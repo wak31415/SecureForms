@@ -7,7 +7,7 @@ class Survey {
 
     public function __construct($con, $survey_id) {
         $this->con = $con;
-        $this->survey_details_query = mysqli_query($con, "SELECT * FROM surveys WHERE id='$survey_id'");
+        $this->survey_details_query = mysqli_query($con, "SELECT * FROM surveys WHERE url_id='$survey_id'");
         $this->data = mysqli_fetch_array($this->survey_details_query);
     }
 }

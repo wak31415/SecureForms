@@ -15,6 +15,10 @@ class User {
         $this->data = mysqli_fetch_array($this->user_details_query);
     }
 
+    public function getID() {
+        return $this->data["id"];
+    }
+
     public function getSecretMessage() {
         return $this->data["secret_msg"];
     }

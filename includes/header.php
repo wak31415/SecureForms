@@ -20,9 +20,10 @@
     <script type = "text/javascript"
         src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
-    <!-- <script type="text/javascript" src="js/sjcl.js"></script> -->
-    <script src="js/require.js"></script>
     <script src="js/cookie_handlers.js"></script>
+    <script src="js/sjcl.js"></script>
+    <script src="js/form_scripts.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>SecureForms</title>
 </head>
 <body>
