@@ -1,6 +1,6 @@
 <?php
 
-    $myfile = fopen("config/root_password", "r") or die("Unable to open file!");
+    $myfile = fopen("/home/william/private/root_password", "r") or die("Unable to open file!");
     $password = fgets($myfile);
     fclose($myfile);
 
@@ -12,6 +12,6 @@
     $con = mysqli_connect("127.0.0.1", "root", $password, "secureforms");
     
     if(mysqli_connect_errno()) {
-    echo "Failed to connect: " . mysqli_connect_errno();
+        echo "Failed to connect: " . mysqli_connect_errno();
     }
 ?>
