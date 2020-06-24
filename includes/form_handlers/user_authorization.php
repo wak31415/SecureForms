@@ -22,12 +22,12 @@ function loginUser($con, $email, $password) {
     }
 }
 
-function registerUser($con, $email, $password, $privkey, $pubkey, $secret_msg) {
+function registerUser($con, $email, $password, $privkey, $pubkey) {
     $date = date("Y-m-d H:i:s");
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     
-    mysqli_query($con, "INSERT INTO users VALUES(NULL,'$email','$hashed_password','$date','$privkey','$pubkey','$secret_msg')");
+    mysqli_query($con, "INSERT INTO users VALUES(NULL,'$email','$hashed_password','$date','$privkey','$pubkey')");
     array_push($error_array, "Successfully registered!");
 
     $_SESSION['reg_fname'] = "";

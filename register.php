@@ -75,7 +75,6 @@
             <label for="password">Retype Password</label>
             </div>
         </div>
-        <input name="secret_msg" id="secret_msg" type="text" required>
         <input name="privkey" id="privkey" type="text" style="display:none">
         <input name="pubkey" id="pubkey" type="text" style="display:none">
 
@@ -121,10 +120,7 @@ $(document).ready(function () {
         setCookie("privkey_password", hexKey, 1)
         
         $("#privkey").val(sec)
-        $("#pubkey").val(pub)
-
-        $("#secret_msg").val(sjcl.encrypt(pair.pub, $("#secret_msg").val()))
-        
+        $("#pubkey").val(pub)        
         
     });
 

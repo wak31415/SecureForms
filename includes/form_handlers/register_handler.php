@@ -22,8 +22,6 @@
         $privkey = $_POST['privkey']; // already encrypted
         $pubkey = $_POST['pubkey'];
 
-        $secret_msg = $_POST['secret_msg'];
-
         // check if email is in valid format
         if(filter_var($em, FILTER_VALIDATE_EMAIL)) {
             $em = filter_var($em, FILTER_VALIDATE_EMAIL);
@@ -53,7 +51,7 @@
         }
 
         if(empty($error_array)) {
-            registerUser($con, $em, $password, $privkey, $pubkey, $secret_msg);
+            registerUser($con, $em, $password, $privkey, $pubkey);
         }
     }
 ?>
