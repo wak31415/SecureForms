@@ -18,8 +18,10 @@
         src = "https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/sjcl.js"></script> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
     <title>SecureForms</title>
 </head>
@@ -34,15 +36,21 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#login">Log In</a>
+                <a class="nav-link <?php if(isset($_SESSION['log_email'])) echo 'active';?>" data-toggle="tab" href="#login">Log In</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#register">Register</a>
+                <a class="nav-link <?php if(!isset($_SESSION['log_email'])) echo 'active';?>" data-toggle="tab" href="#register">Register</a>
             </li>
         </ul>
     
         <div class="tab-content">
-            <div id="login" class="tab-pane container fade"><br>
+            <div id="login" class="tab-pane container <?php if(isset($_SESSION['log_email'])) {echo 'active';} else echo 'fade';?>"><br>
+                <?php 
+                    
+                    if(in_array("Email or password incorrect", $error_array)) {
+                        echo "<div class='alert alert-danger'>Email or password incorrect</div>";
+                    }
+                ?>
                 <form action="register.php" id="loginform" method="POST">
                     <div class="form-group">
                         <label for="log_email">Email</label>
@@ -55,13 +63,16 @@
                         <input name="log_password" id="log_password" type="password" class="form-control" required>
                     </div>
                     <button type="submit" name="login_button" class="btn btn-primary">Log in</button>
-            
-                    <?php if(in_array("Email or password incorrect", $error_array)) echo "Email or password incorrect<br>"; ?>
                 </form>
             </div>
             
-            <div id="register" class="tab-pane container active"><br>
-                <form action="register.php" id="registerform" method="POST">
+            <div id="register" class="tab-pane container <?php if(!isset($_SESSION['log_email'])) {echo 'active';} else echo 'fade';?>"><br>
+                <?php
+                    if(in_array("Email already in use", $error_array)) {
+                        echo "<div class='alert alert-danger'>This email is already in use</div>";
+                    }
+                ?>
+                <form action="register.php" id="registerform" class="needs-validation" novalidate="novalidate" method="POST">
                     <div class="form-group">
                         <label for="reg_email">Email</label>
                         <input name="reg_email" id="reg_email" type="email" class="form-control" value="<?php
@@ -70,7 +81,7 @@
                     </div>
                     <div class="form-group">
                         <label for="reg_password">Password</label>
-                        <input name="reg_password" id="reg_password" type="password" class="form-control" required>
+                        <input pattern=".{12,}"  name="reg_password" id="reg_password" type="password" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="reg_password2">Retype Password</label>
@@ -81,8 +92,8 @@
             
                     <button type="submit" name="register_button" class="btn btn-primary">Register</button>
             
-                    <?php if(in_array("Email or password incorrect", $error_array)) echo "Email or password incorrect<br>"; ?>
                 </form>
+
             </div>
         </div>
     </div>
@@ -99,6 +110,46 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 $(document).ready(function () {
+    $("#registerform").validate({
+        rules: {
+            reg_email: {
+                required: true,
+                email: true
+            },
+            reg_password: {
+                required: true,
+                minlength: 12
+            },
+            reg_password2: {
+                required: true,
+                equalTo: "#reg_password"
+            }
+        }, 
+        messages: {
+            reg_email: "Please enter a valid email",
+            reg_password: {
+                required: "Please enter a password",
+                minlength: "Your password must have at least 12 characters"
+            },
+            reg_password2: {
+                required: "Please confirm your password",
+                equalTo: "Passwords don't match"
+            }
+        },
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            // Add the `help-block` class to the error element
+            error.addClass( "invalid-feedback" );
+
+            if ( element.prop( "type" ) === "checkbox" ) {
+                error.insertAfter( element.parent( "label" ) );
+            } else {
+                error.insertAfter( element );
+            }
+        }
+    });
+    
+
     $("#registerform").submit(function () {
         // Generate private/public keys
         var pair = sjcl.ecc.elGamal.generateKeys(256)

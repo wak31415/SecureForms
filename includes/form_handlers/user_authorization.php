@@ -1,6 +1,8 @@
 <?php
+$error_array = array();
 
 function loginUser($con, $email, $password) {
+    global $error_array;
     $check_database_query = mysqli_query($con, "SELECT * FROM users WHERE email='$email'");
     $check_login_query = mysqli_num_rows($check_database_query);
     
