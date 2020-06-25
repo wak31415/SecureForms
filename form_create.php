@@ -26,11 +26,13 @@
             <div class="card">
                 <div class="card-header">
                     <p id="view_results"></p>
-                    <button class="btn btn-primary" id="copy_to_clipboard">Share Form</button><br>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#share-link-modal" id="copy_to_clipboard"><i class="fa fa-paper-plane"></i> Share</button><br>
                 </div>
-                <input class="btn add_new_btn" type="button" value="+ Checkbox" id="add_checkbox"><br>
-                <input class="btn add_new_btn" type="button" value="+ Radio" id="add_radio"><br>
-                <input class="btn add_new_btn" type="button" value="+ Text" id="add_text"><br>
+                <div class="btn-group">
+                    <button class="btn btn-light add_new_btn" id="add_checkbox"><i class="fa fa-check-square"></i></button>
+                    <button class="btn btn-light add_new_btn" id="add_radio"><i class="fa fa-dot-circle-o"></i></button>
+                    <button class="btn btn-light add_new_btn" id="add_text"><i class="fa fa-keyboard-o"></i></button>
+                </div>
                 <div class="card-footer">
                     <form action="form_create.php" name="save_form_data" method="post">
                         <input type="hidden" name="form_data" id="form_data">
@@ -45,6 +47,26 @@
         </div>
     </div>
 
+</div>
+
+<div class="modal fade" id="share-link-modal">
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-header"><h4>Share your form with others!</h4></div>
+    <div class="modal-body">
+        <p>This link contains the key to decrypt the form content. Only share with people you trust!</p>
+        <div class="input-group mb-3">
+            <input id="share-link-input" type="text" class="form-control">
+            <div class="input-group-append">
+                <button onclick="copyLink()" class="btn btn-success" type="submit">Copy</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+</div>
+</div>
 </div>
 
 
@@ -77,6 +99,14 @@ var parsedHash = new URLSearchParams(
 ?>
 
 key = sjcl.decrypt(sec,key);
+
+function copyLink() {
+    var copyText = document.getElementById("share-link-input");
+    copyText.select();
+    copyText.setSelectionRange(0,99999);
+    document.execCommand("copy");
+
+}
 
 $(document).ready(function () {    
     // construct form from JSON
@@ -133,8 +163,8 @@ $(document).ready(function () {
     });
 
     $("#copy_to_clipboard").click(function(){
-        var link = "form.php?survey_id="+survey_id+"#key="+key;
-        navigator.clipboard.writeText(link);
+        var link = "https://forms.william-koch.com/form.php?survey_id="+survey_id+"#key="+key;
+        $("#share-link-input").val(link);
     });
     
 });
