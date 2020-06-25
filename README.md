@@ -10,7 +10,7 @@ Due to the development nature of this web application it is possible that your a
 
 ## End-to-end encryption
 
-Unlike other survey tools like Google Forms, Microsoft Forms, Limesurvey, Framaforms, Typeform and many others, **SecureForms** encrypts your form data so that only **you** and the people you share it with have access to it. Even if the server administrator wanted to, he or she could not possibly find out what people respond to your survey, or even what the questions in your survey are. This makes **SecureForms** the ideal tool not only for individuals, but also for companies and health industries working with confidential data.
+Unlike other survey tools like Google Forms, Microsoft Forms, Limesurvey, Framaforms, Typeform and many others, **SecureForms** encrypts your form data so that only **you** and the people you share it with have access to it. Even if the server administrator wanted to, he or she could not possibly find out what people respond to your survey, or even what the questions in your survey are. This makes **SecureForms** the ideal tool not only for individuals, but also for companies and health industries working with confidential data. 
 
 The general idea is to make your life as simple as possible. You should not have to wonder what end-to-end encryption is or how it works to use the application. SecureForms is as easy to use as any other survey tool, just much safer.
 
