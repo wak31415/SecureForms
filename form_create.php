@@ -7,22 +7,44 @@
     $survey = new Survey($con, $survey_id);
 ?>
 
-<p id="view_results"></p>
 
-<div class="form_container">
-    <p id="save_status">Status: saved</p>
-    <button id="copy_to_clipboard">Share Form</button>
-    <div id="form_elements"></div>
-
-    <div class="add_new">
-        <input class="add_new_btn" type="button" value="+ Checkbox" id="add_checkbox">
-        <input class="add_new_btn" type="button" value="+ Radio" id="add_radio">
-        <input class="add_new_btn" type="button" value="+ Text" id="add_text">
-        <form action="form_create.php" name="save_form_data" method="post">
-            <input type="hidden" name="form_data" id="form_data">
-            <input type="button" value="Save Form" name="save_button" id="save">
-        </form>
+<div class="container bg-light">
+    <div class="row">
+        <div class="col-sm-4">
+            <h1>Edit Form</h1><br>
+        </div>
+        <div class="col-sm-8">
+            <h2 id="form-title"></h2>
+            <div class="alert alert-success">
+                Status: <span id="save_status">saved</span>
+            </div>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-sm-4 add_new">
+
+            <div class="card">
+                <div class="card-header">
+                    <p id="view_results"></p>
+                    <button class="btn btn-primary" id="copy_to_clipboard">Share Form</button><br>
+                </div>
+                <input class="btn add_new_btn" type="button" value="+ Checkbox" id="add_checkbox"><br>
+                <input class="btn add_new_btn" type="button" value="+ Radio" id="add_radio"><br>
+                <input class="btn add_new_btn" type="button" value="+ Text" id="add_text"><br>
+                <div class="card-footer">
+                    <form action="form_create.php" name="save_form_data" method="post">
+                        <input type="hidden" name="form_data" id="form_data">
+                        <input class="btn btn-success" type="button" value="Save Form" name="save_button" id="save">
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-8">
+            <div id="form_elements"></div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -62,6 +84,7 @@ $(document).ready(function () {
     data = JSON.parse(data);
 
     // build form elements
+    $("#form-title").text(data.name);
     for (question of data.elements) {
         addFormElementAdmin(question);
     }
@@ -73,27 +96,36 @@ $(document).ready(function () {
     $("#view_results").append(form_link);
 
     $("input").change(function(){
-        $("#save_status").text("Status: unsaved changes")
-        .addClass("unsaved");
+        $("#save_status").text("unsaved changes");
+        $("#save_status").parent().addClass("alert-danger")
+        .removeClass("alert-success");
     })
     
     $(".add_new_btn").click(function() {
-        $("#save_status").text("Status: unsaved changes")
-        .addClass("unsaved");
+        $("#save_status").text("unsaved changes");
+        $("#save_status").parent().addClass("alert-danger")
+        .removeClass("alert-success");
         addFormElementAdmin(getElementObj(this));
     });
 
 
     $("#save").click(function() {
-        var data = JSON.stringify(updateFormData());
-        data = sjcl.encrypt(key,data);
-        $("#form_data").val(data);
+        var updated_data = updateFormData();
+        updated_data.name = data.name;
+        updated_data = sjcl.encrypt(key,JSON.stringify(updated_data));
+        $("#form_data").val(updated_data);
         
         let formData = new FormData(document.forms.save_form_data);
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
-            $("#save_status").text("Status: " + this.responseText)
-            .removeClass("unsaved");
+            $("#save_status").text(this.responseText);
+            if (this.responseText != "saved") {
+                $("#save_status").parent().addClass("alert-danger")
+                .removeClass("alert-success");
+            } else {
+                $("#save_status").parent().removeClass("alert-danger")
+                .addClass("alert-success");
+            }
             // alert(this.responseText);
         }
         xmlhttp.open("POST","includes/form_handlers/save_form.php?survey_id="+survey_id);
@@ -101,7 +133,7 @@ $(document).ready(function () {
     });
 
     $("#copy_to_clipboard").click(function(){
-        var link = "localhost/SecureForms/form.php?survey_id="+survey_id+"#key="+key;
+        var link = "form.php?survey_id="+survey_id+"#key="+key;
         navigator.clipboard.writeText(link);
     });
     

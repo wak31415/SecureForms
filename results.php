@@ -13,9 +13,14 @@
     
 ?>
 
+
+<div class="container bg-light">
 <h1>Form Submission Results:</h1>
 
-<table id="submission_table" class="table table-hover"></table>
+<div class="table-responsive">
+    <table id="submission_table" class="table table-bordered table-striped"></table>
+</div>
+</div>
 
 <script>
 
@@ -79,7 +84,7 @@ for(sub of submissions) {
             v = v.substr(2);
             obj[k].push(Number(v));
         } else {
-            obj[k] = v.replace("+"," ");
+            obj[k] = v.replace("%20"," ");
         }
     }
     submission_objs.push(obj);

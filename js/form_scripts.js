@@ -20,28 +20,42 @@ function getElementObj(add_btn) {
 function addFormElementAdmin(element) {
     var container = document.createElement("DIV");
     $(container).appendTo("#form_elements")
-    .addClass("form_element")
-    .addClass("animate__fadeOutUp");
+    .addClass("card form_element");
+
+    var card_header = document.createElement("DIV");
+    $(card_header).appendTo(container)
+    .addClass("card-header");
+
+    if(element.type!="text") {
+        var card_body = document.createElement("DIV");
+        $(card_body).appendTo(container)
+        .addClass("card-body");
+    }
+
+    var card_footer = document.createElement("DIV");
+    $(card_footer).appendTo(container)
+    .addClass("card-footer");
 
     var remove_btn = document.createElement("BUTTON");
-    remove_btn.innerText = "x Remove Element";
-    remove_btn.class = "remove_element";
-    $(remove_btn).click(function() {
-        $(this).parent().remove();
-        $("#save_status").text("Status: unsaved changes")
-        .addClass("unsaved");
+    $(remove_btn).text("Remove")
+    .addClass("btn btn-danger")
+    .click(function() {
+        $(this).parent().parent().remove();
+        $("#save_status").text("unsaved changes");
+        $("#save_status").parent().addClass("alert-danger")
+        .removeClass("alert-success");
     });
-    $(container).append(remove_btn);
-    $(container).append(document.createElement("BR"));
+    $(card_footer).append(remove_btn);
 
     var el_label = document.createElement("P");
     $(el_label).text(element.type)
     .addClass("type")
-    .appendTo(container);
+    .attr("style","display: none")
+    .appendTo(card_header);
     
     $("<input>").attr({"type":"text", "placeholder":"Title"})
-    .addClass("form_text")
-    .appendTo(container)
+    .addClass("form-control form-control-lg form_text")
+    .appendTo(card_header)
     .val(element.question)
     .focus();
 
@@ -51,9 +65,9 @@ function addFormElementAdmin(element) {
         case "checkbox":
         case "radio":
             for(opt of element.options) {
-                createOptionField(container, opt);
+                createOptionField(card_body, opt, element.type);
             }
-            createOptionField(container,"");
+            createOptionField(card_body,"",element.type);
             
             break;
     
@@ -63,7 +77,7 @@ function addFormElementAdmin(element) {
     
 }
 
-function createOptionField(form_el_container,val,trigger_field=false) {
+function createOptionField(form_el_container,val,type=false,trigger_field=false) {
     // check if the trigger field is the last option field, only then create
     // a new option field
     if (!trigger_field) {
@@ -78,23 +92,42 @@ function createOptionField(form_el_container,val,trigger_field=false) {
     // } else {
     //     $(trigger_field).parent().after(option_container);
     // }
-    $(option_container).addClass("option_container")
+    $(option_container).addClass("input-group")
     .appendTo(form_el_container);
+    if(type) {
+        var $prepend = $("<div>",{"class":"input-group-prepend"});
+        var $prepend_content = $("<div>",{"class":"input-group-text"});
+        var $input_type = $("<input>",{"type":type,"disabled":true});
+        $input_type.appendTo($prepend_content);
+        $prepend_content.appendTo($prepend);
+        $prepend.appendTo(option_container);
+    }
 
     var option_field = document.createElement("INPUT");
     var rem_option = document.createElement("BUTTON");
     
-    $(option_field).attr({"type":"text", "class":"option_field"})
+    $(option_field).attr({"type":"text","placeholder":"New Option"})
+    .addClass("form-control")
     .appendTo(option_container)
     .val(val)
-    .on("keypress", function() {createOptionField(form_el_container,"",this)})
+    .on("keypress", function() {createOptionField(form_el_container,"",type,this)})
     .on("blur", function() {
         $(option_field).parent().next("div").children("input").focus();
     });
 
+    var option_container_append = document.createElement("DIV");
+    $(option_container_append).addClass("input-group-append")
+    .appendTo(option_container);
+
     $(rem_option).text("X")
-    .appendTo(option_container)
-    .click(function() {$(this).parent().remove()});
+    .appendTo(option_container_append)
+    .addClass("btn")
+    .click(function() {
+        $(this).parent().parent().remove();
+        $("#save_status").text("unsaved changes");
+        $("#save_status").parent().addClass("alert-danger")
+        .removeClass("alert-success");
+    });
 
 }
 
@@ -104,15 +137,15 @@ function updateFormData() {
     $("#form_elements").children("div").each(function(){
         var element = {};
         element.name = (name_counter++).toString();
-        element.type = $(this).children(".type").text();
+        element.type = $(this).find(".type").text();
         element.required = false;
-        element.question = $(this).children(".form_text").val();
+        element.question = $(this).find(".form_text").val();
         
         var options = [];
         
         // iterate over options
-        $(this).children(".option_container").each(function() {
-            var content = $(this).children(".option_field").val();
+        $(this).find(".input-group").each(function() {
+            var content = $(this).children(".form-control").val();
             if (content != "") {
                 options.push(content);
             }
@@ -129,9 +162,9 @@ function updateFormData() {
 function addFormElement(element) {
     var container = document.createElement("DIV");
     $(container).appendTo("#form_elements")
-    .addClass("form_element");
+    .addClass("card form_element");
     
-    $("<p></p>").addClass("form_question")
+    $("<div>").addClass("card-header form_question")
     .appendTo(container)
     .text(element.question);
 
@@ -143,22 +176,26 @@ function addFormElement(element) {
             for(opt in element.options) {
                 var id = element.name + "_" + opt.toString();
                 var value = element.options[opt];
-                $("<input>").attr({"type":element.type,
-                                   "name":element.name,
-                                   "id":id,
-                                   "value":id})
-                .appendTo(container);
-                $("<label>").attr({"for":id})
-                .text(value)
-                .appendTo(container);
-                $(container).append(document.createElement("BR"));
+                
+                $("<div>",{"class":"form-check"}).append(
+                    $("<label>",{"class":"form-check-label"}).append(
+                        $("<input>",{
+                            "type":element.type,
+                            "name":element.name,
+                            "id":id,
+                            "value":id,
+                            "class":"form-check-input"})
+                    )
+                    .append($("<p>").text(value))
+                ).appendTo(container);
             }
             
             break;
     
         case "text":
             $("<input>").attr({"type":element.type, "name":element.name})
-            .appendTo(container);
+            .appendTo(container)
+            .addClass("form-control");
         default:
             break;
     }

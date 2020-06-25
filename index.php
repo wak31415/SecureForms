@@ -17,17 +17,59 @@
     ]);
 ?>
 
-<h2>Your Forms:</h2>
-<ul id="form_list"></ul>
 
-<h2>Create a new form:</h2>
-<form action="index.php" id="create_new_form" method="post">
-    <label for="form_name">Form Name:</label>
-    <input type="text" name="form_name" id="form_name">
-    <input type="hidden" name="form_key" id="form_key">
-    <input type="hidden" name="form_data" id="form_data">
-    <button type="submit" name="new_form">Create!</button>
-</form>
+<div class="container bg-light">
+    <div class="row">
+        <div class="col-sm-4">
+            <h2>Control Center</h2>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            New Form
+            </button>
+        </div>
+        
+        <div class="col-sm-8">
+            <h2>Your Forms</h2>
+            <input class="form-control" id="searchForms" type="text" placeholder="Search..">
+            <br>
+            <div class="list-group" id="form_list"></ul>
+        </div>
+    </div>
+
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Enter a name for your new form</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <form action="index.php" id="create_new_form" method="post" autocomplete="off">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="form_name" id="form_name">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="form_key" id="form_key">
+                    <input type="hidden" name="form_data" id="form_data">
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="submit" name="new_form">Create</button>
+            </div>
+        </form>
+
+        </div>
+    </div>
+</div>
 
 
 <script>
@@ -67,13 +109,19 @@ $(document).ready(function () {
     console.log(your_forms)
     
     for (i=0; i<num_forms; i++) {
-        var form_item = document.createElement('LI');
         var form_link = document.createElement('A');
         form_link.href = "form_create.php?survey_id="+your_forms[i].urlID;
         form_link.innerText = your_forms[i].formName;
-        form_item.appendChild(form_link);
-        document.getElementById('form_list').appendChild(form_item);
+        $(form_link).addClass("list-group-item list-group-item-action");
+        $("#form_list").append(form_link);
     }
+
+    $("#searchForms").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#form_list a").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
     
     $("#create_new_form").submit(function () {
         var key = sjcl.ecc.elGamal.generateKeys(256).sec.get()

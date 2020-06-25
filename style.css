@@ -1,47 +1,15 @@
-.form_container {
-    background-color: ghostwhite;
-    padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 800px;
+.container {
+    padding: 30px;
 }
 
 .form_element {
-    padding: 10px;
-    border: 1px solid black;
-    margin: 10px 0 10px 0;
+    margin-bottom: 30px;
 }
 
-.form_element input.form_text {
-    box-sizing: border-box;
-    width: 100%;
+.controls {
+    padding-top: 100px;
 }
 
-.option_field {
-    box-sizing: border-box;
-    width: 90%;
-}
-
-.option_container button {
-    box-sizing: border-box;
-    width: 10%;
-    color: red;
-}
-
-#save_status { color: green; }
-
-#save_status.unsaved {
-    color: red;
-}
-
-table {
-    border: 1px solid black;
-    border-spacing: 10px;
-}
-thead {
-    text-align: left;
-}
-
-tbody tr:hover {
-    background-color: rgb(241, 241, 241);
+.login {
+    max-width: 500px;
 }
