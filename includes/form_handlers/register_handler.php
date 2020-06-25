@@ -6,7 +6,6 @@
     $password = "";
     $password2 = "";
     $date = "";
-    $error_array = array();
 
     if(isset($_POST['register_button'])) {
         // Registration form values
@@ -15,6 +14,7 @@
         $em = str_replace(' ', '', $em);
         $em = strtolower($em);
         $_SESSION['reg_email'] = $em;
+        unset($_SESSION['log_email']);
         
         $password = strip_tags($_POST['reg_password']);
         $password2 = strip_tags($_POST['reg_password2']);
@@ -39,15 +39,6 @@
 
         if($password != $password2) {
             array_push($error_array, "Your passwords do not match");
-        }
-        else {
-            if(preg_match('/[^A-Za-z0-9]/',$password)) {
-                array_push($error_array, "Your password can only contain english caharacters or numbers");
-            }
-        }
-
-        if(strlen($password > 50 || strlen($password) < 8)) {
-            array_push($error_array, "Your password must be between 8 and 50 characters");
         }
 
         if(empty($error_array)) {
