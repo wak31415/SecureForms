@@ -167,8 +167,8 @@ function addFormElement(element) {
     $("<div>").addClass("card-header form_question")
     .appendTo(container)
     .text(element.question);
-
-    // $(container).append(document.createElement("BR"));
+    var card_body = $("<div>").addClass("card-body form_options")
+    .appendTo(container);
     
     switch (element.type) {
         case "checkbox":
@@ -186,8 +186,8 @@ function addFormElement(element) {
                             "value":id,
                             "class":"form-check-input"})
                     )
-                    .append($("<p>").text(value))
-                ).appendTo(container);
+                    .append(value)
+                ).appendTo(card_body);
             }
             
             break;

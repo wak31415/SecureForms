@@ -67,8 +67,8 @@ var submission_objs = [];
 
 for(sub of submissions) {
     var sub_split = sub.split("&");
-    // console.log(sub_split);
     var obj = {};
+
     // initialize response object
     for(var d_key in sub_split) {
         var k = sub_split[d_key].split("=")[0];
@@ -95,10 +95,11 @@ for(sub of submissions) {
 // var submission_table = document.createElement("TABLE");
 var header = document.createElement("THEAD");
 var row = document.createElement("TR");
+
 for(question of data.elements) {
     $(row).append($("<th>").text(question.question));
-    // console.log(question.question);
 }
+
 $(header).append(row);
 $("#submission_table").append(header);
 

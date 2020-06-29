@@ -28,7 +28,7 @@ if(isset($_POST['new_form'])) {
         header("Location: form_create.php?survey_id=$url_id");
     }
     else {
-        echo "Error creating new form<br>";
+        echo "Error creating new form: $url_id, $user_id, $form_name<br>";
     }
 }
 

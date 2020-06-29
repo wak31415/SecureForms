@@ -3,7 +3,9 @@
     include("includes/classes/User.php");
     include("includes/handlers.php");
     
+    include("includes/redirect.php");
     $user = new User($con, $userLoggedIn);
+    // echo $userLoggedIn;
     include("includes/form_handlers/create_new_form.php");
     setcookie("privkey", $user->data["priv_key_encrypted"], [
         'expires' => time()+86400*30,
@@ -77,20 +79,20 @@ var sec_encrypted = getCookie("privkey")
 // password used to encrypt the private key sec
 var privkey_password = getCookie("privkey_password")
 
-var pub = getCookie("pubkey")
+var pub = getCookie("pubkey");
 // deserialize public key
 pub = new sjcl.ecc.elGamal.publicKey(
     sjcl.ecc.curves.c256, 
     sjcl.codec.base64.toBits(pub)
-)
+);
 
 // decrypt secret key
-var sec = sjcl.decrypt(privkey_password, sec_encrypted)
+var sec = sjcl.decrypt(privkey_password, sec_encrypted);
 // deserialize secret key
 sec = new sjcl.ecc.elGamal.secretKey(
     sjcl.ecc.curves.c256,
     sjcl.ecc.curves.c256.field.fromBits(sjcl.codec.base64.toBits(sec))
-)
+);
 
 $(document).ready(function () {
     var your_forms = []
@@ -106,8 +108,7 @@ $(document).ready(function () {
             echo "your_forms.push(form)\n";
         }
     ?>
-    console.log(your_forms)
-    
+        
     for (i=0; i<num_forms; i++) {
         var form_link = document.createElement('A');
         form_link.href = "form_create.php?survey_id="+your_forms[i].urlID;

@@ -1,36 +1,14 @@
 <?php
-    require 'config/config.php';
-    require 'includes/form_handlers/user_authorization.php';
-    require 'includes/form_handlers/login_handler.php';
-    require 'includes/form_handlers/register_handler.php';
     if (isset($_SESSION["email"])) {
         header("Location: index.php");
     }
+    include("includes/header.php");
+    include('includes/form_handlers/user_authorization.php');
+    include('includes/form_handlers/login_handler.php');
+    include('includes/form_handlers/register_handler.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type = "text/javascript"
-        src = "https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="js/sjcl.js"></script> 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>SecureForms</title>
-</head>
-<body>
-
 <div class="container">
-    
-    <h1>SecureForms</h1>
-    <p>End-to-End encrypted surveys and forms</p>
     
     <div class="login bg-light mx-auto rounded-lg">
         <!-- Nav tabs -->
@@ -183,7 +161,7 @@ $(document).ready(function () {
 
     $("#loginform").submit(function () {                
         // encrypt private key using account password
-        var password = $("#log_password").val()
+        var password = $("#log_password").val();
 
         var hmacSHA256 = function (key) {
             var hasher = new sjcl.misc.hmac( key, sjcl.hash.sha256 );
@@ -195,8 +173,8 @@ $(document).ready(function () {
         var passwordSalt = sjcl.codec.hex.toBits( "cf7488cd1e48e84990f51b3f121e161318ba2098aa6c993ded1012c955d5a3e8" );
         var derivedKey = sjcl.misc.pbkdf2( password, passwordSalt, 100, 256, hmacSHA256 );
         var hexKey = sjcl.codec.hex.fromBits( derivedKey );
-
-        setCookie("privkey_password", hexKey, 1)
+        
+        setCookie("privkey_password", hexKey, 1);
     });
 });
 </script>

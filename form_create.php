@@ -2,6 +2,7 @@
     include("includes/header.php");
     include("includes/handlers.php");
     include("includes/classes/Survey.php");
+    include("includes/redirect.php");
 
     $survey_id = $_GET["survey_id"];
     $survey = new Survey($con, $survey_id);
@@ -163,7 +164,7 @@ $(document).ready(function () {
     });
 
     $("#copy_to_clipboard").click(function(){
-        var link = "https://forms.william-koch.com/form.php?survey_id="+survey_id+"#key="+key;
+        var link = "<?php echo $config['domainName'];?>/form.php?survey_id="+survey_id+"#key="+key;
         $("#share-link-input").val(link);
     });
     

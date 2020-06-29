@@ -1,5 +1,5 @@
 <?php
-    include("config/config.php");
+    include("includes/header.php");
     include("includes/classes/Survey.php");
     include('includes/form_handlers/submit_response.php');
     
@@ -8,33 +8,7 @@
     $survey = new Survey($con, $survey_id);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
- 
-    <!-- JavaScript -->
-    <script type = "text/javascript"
-        src = "https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-    <script src="js/sjcl.js"></script>
-    <script src="js/cookie_handlers.js"></script>
-    <script src="js/form_scripts.js"></script>
-    <script src="js/general_scripts.js"></script>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>SecureForms</title>
-</head>
-<body>
-
-<div class="container bg-light">
+<div class="container bg-light form-complete-page">
     <h1 id="form_title"></h1>
     <form id="form_frame">
         <div id="form_elements"></div>
@@ -42,7 +16,7 @@
     <form action="form.php" id="submit_responses" name="submit_responses" method="post">
         <input type="hidden" name="id" id="survey_id">
         <input type="hidden" name="response_data" id="response_data">
-        <input type="submit" value="Submit" name="submit_resp">
+        <input class="btn btn-primary" type="submit" value="Submit" name="submit_resp">
     </form>
 </div>
 

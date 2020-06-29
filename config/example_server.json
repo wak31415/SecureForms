@@ -1,0 +1,4 @@
+{
+    "domainName": "sub.example.com",
+    "dbPasswordPath": "/path/to/database/password",
+}
