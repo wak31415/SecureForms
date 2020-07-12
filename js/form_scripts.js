@@ -37,7 +37,7 @@ function addFormElementAdmin(element) {
     .addClass("card-footer");
 
     var remove_btn = document.createElement("BUTTON");
-    $(remove_btn).text("Remove")
+    $(remove_btn).append($("<i class='fa fa-trash'></i>"))
     .addClass("btn btn-danger")
     .click(function() {
         $(this).parent().parent().remove();

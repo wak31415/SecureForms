@@ -15,11 +15,16 @@
 
 
 <div class="container bg-light">
-<h1>Form Submission Results:</h1>
 
-<div class="table-responsive">
-    <table id="submission_table" class="table table-bordered table-striped"></table>
-</div>
+    <a href="form_create.php?survey_id=<?php echo $_GET['survey_id']; ?>" class="btn btn-outline-primary">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i> Edit Form
+    </a>
+
+    <h1>Form Submission Results:</h1>
+
+    <div class="table-responsive">
+        <table id="submission_table" class="table table-bordered table-striped"></table>
+    </div>
 </div>
 
 <script>
@@ -84,7 +89,7 @@ for(sub of submissions) {
             v = v.substr(2);
             obj[k].push(Number(v));
         } else {
-            obj[k] = v.replace("%20"," ");
+            obj[k] = unescape(v);
         }
     }
     submission_objs.push(obj);
