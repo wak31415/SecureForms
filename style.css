@@ -17,3 +17,9 @@
 .form-complete-page {
     max-width: 700px;
 }
+
+.card.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 70px;
+}

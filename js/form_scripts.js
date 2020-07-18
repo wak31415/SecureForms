@@ -56,8 +56,7 @@ function addFormElementAdmin(element) {
     $("<input>").attr({"type":"text", "placeholder":"Title"})
     .addClass("form-control form-control-lg form_text")
     .appendTo(card_header)
-    .val(element.question)
-    .focus();
+    .val(element.question);
 
     // $(container).append(document.createElement("BR"));
     

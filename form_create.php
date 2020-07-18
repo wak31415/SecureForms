@@ -16,7 +16,7 @@
         </div>
         <div class="col-sm-8">
             <h2 id="form-title"></h2>
-            <div class="alert alert-success">
+            <div class="alert alert-success" id="save-alert-status">
                 Status: <span id="save_status">saved</span>
             </div>
         </div>
@@ -24,21 +24,33 @@
     <div class="row">
         <div class="col-sm-4 add_new">
 
-            <div class="card">
+            <div class="card sticky">
                 <div class="card-header">
-                    <p id="view_results"></p>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#share-link-modal" id="copy_to_clipboard"><i class="fa fa-paper-plane"></i> Share</button><br>
+                <h3>Tools</h3>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-light add_new_btn" id="add_checkbox"><i class="fa fa-check-square"></i></button>
-                    <button class="btn btn-light add_new_btn" id="add_radio"><i class="fa fa-dot-circle-o"></i></button>
-                    <button class="btn btn-light add_new_btn" id="add_text"><i class="fa fa-keyboard-o"></i></button>
+                    <button class="btn btn-light add_new_btn" id="add_checkbox" title="Checkbox"><i class="fa fa-check-square"></i></button>
+                    <button class="btn btn-light add_new_btn" id="add_radio" title="Radio"><i class="fa fa-dot-circle-o"></i></button>
+                    <button class="btn btn-light add_new_btn" id="add_text" title="Text"><i class="fa fa-keyboard-o"></i></button>
                 </div>
                 <div class="card-footer">
-                    <form action="form_create.php" name="save_form_data" method="post">
-                        <input type="hidden" name="form_data" id="form_data">
-                        <input class="btn btn-success" type="button" value="Save Form" name="save_button" id="save">
-                    </form>
+                    <div class="btn-group d-flex" role="group">
+                        <button class="btn btn-outline-success" name="save_button" id="save">
+                            <i class="fa fa-floppy-o"></i>
+                            Save
+                        </button>
+                        <form action="form_create.php" name="save_form_data" method="post">
+                            <input type="hidden" name="form_data" id="form_data">
+                        </form>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#share-link-modal" id="copy_to_clipboard">
+                            <i class="fa fa-paper-plane"></i>
+                            Share
+                        </button>
+                        <a class="btn btn-outline-secondary" id="view_results">
+                            <i class="fa fa-bar-chart"></i>
+                            Results
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,23 +121,22 @@ function copyLink() {
 
 }
 
-$(document).ready(function () {    
+$(document).ready(function () {  
+    $('[data-toggle="tooltip"]').tooltip();
+
     // construct form from JSON
     data = sjcl.decrypt(key, data);
     data = JSON.parse(data);
-
+    
     // build form elements
     $("#form-title").text(data.name);
     for (question of data.elements) {
         addFormElementAdmin(question);
     }
-
+    
     // create link for viewing results
-    var form_link = document.createElement('A');
-    form_link.href = "results.php?survey_id="+survey_id;
-    form_link.innerText = "View Results";
-    $("#view_results").append(form_link);
-
+    $("#view_results").attr("href","results.php?survey_id="+survey_id);
+    
     $("input").change(function(){
         $("#save_status").text("unsaved changes");
         $("#save_status").parent().addClass("alert-danger")
@@ -137,10 +148,12 @@ $(document).ready(function () {
         $("#save_status").parent().addClass("alert-danger")
         .removeClass("alert-success");
         addFormElementAdmin(getElementObj(this));
+        $("#form_elements").children().last().find("input").first().focus();
+        $('html, body').animate({ scrollTop: $(document).height() - $(window).height() }, 'fast');
+        // window.scrollTo(0,$(document).height() - $(window).height());
     });
 
-
-    $("#save").click(function() {
+    function saveForm() {
         var updated_data = updateFormData();
         updated_data.name = data.name;
         updated_data = sjcl.encrypt(key,JSON.stringify(updated_data));
@@ -161,6 +174,19 @@ $(document).ready(function () {
         }
         xmlhttp.open("POST","includes/form_handlers/save_form.php?survey_id="+survey_id);
         xmlhttp.send(formData);
+    }
+
+    $("#save").click(saveForm);
+
+    $(window).bind('keydown', function(event) {
+        if (event.ctrlKey || event.metaKey) {
+            switch (String.fromCharCode(event.which).toLowerCase()) {
+            case 's':
+                event.preventDefault();
+                saveForm();
+                break;
+            }
+        }
     });
 
     $("#copy_to_clipboard").click(function(){

@@ -36,7 +36,7 @@ if(isset($_SESSION['email'])) {
             <li class="nav-item"><a class="nav-link" href="index.php"><i class="fa fa-home"></i> Dashboard</a></li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="logout.php">Log out</a></li>
+            <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fa fa-sign-out"></i> Log out</a></li>
         </ul>
     ';
 } else {
