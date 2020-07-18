@@ -151,11 +151,11 @@ $(document).ready(function () {
         var derivedKey = sjcl.misc.pbkdf2( password, passwordSalt, 100, 256, hmacSHA256 );
         var hexKey = sjcl.codec.hex.fromBits( derivedKey );
 
-        sec = sjcl.encrypt(hexKey, sec)
-        setCookie("privkey_password", hexKey, 1)
+        sec = sjcl.encrypt(hexKey, sec);
+        sessionStorage.privkey_password = hexKey;
         
-        $("#privkey").val(sec)
-        $("#pubkey").val(pub)        
+        $("#privkey").val(sec);
+        $("#pubkey").val(pub);       
         
     });
 
@@ -174,7 +174,7 @@ $(document).ready(function () {
         var derivedKey = sjcl.misc.pbkdf2( password, passwordSalt, 100, 256, hmacSHA256 );
         var hexKey = sjcl.codec.hex.fromBits( derivedKey );
         
-        setCookie("privkey_password", hexKey, 1);
+        sessionStorage.privkey_password = hexKey;
     });
 });
 </script>

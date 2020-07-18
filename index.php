@@ -77,8 +77,6 @@
 <script>
 var sec_encrypted = getCookie("privkey")
 // password used to encrypt the private key sec
-var privkey_password = getCookie("privkey_password")
-
 var pub = getCookie("pubkey");
 // deserialize public key
 pub = new sjcl.ecc.elGamal.publicKey(
@@ -87,7 +85,7 @@ pub = new sjcl.ecc.elGamal.publicKey(
 );
 
 // decrypt secret key
-var sec = sjcl.decrypt(privkey_password, sec_encrypted);
+var sec = sjcl.decrypt(sessionStorage.privkey_password, sec_encrypted);
 // deserialize secret key
 sec = new sjcl.ecc.elGamal.secretKey(
     sjcl.ecc.curves.c256,
