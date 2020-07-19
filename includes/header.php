@@ -1,6 +1,5 @@
 <?php
     include('config/config.php');
-
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="node_modules/chart.js/dist/Chart.js"></script>
     <script src="js/cookie_handlers.js"></script>
     <script src="js/sjcl.js"></script>
     <script src="js/form_scripts.js"></script>
