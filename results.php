@@ -319,10 +319,22 @@ for(sub of submission_objs) {
         var value;
         if (data.elements[entry].type == "radio"||data.elements[entry].type=="checkbox") {
             value = sub[entry].map(function(x) {return data.elements[entry].options[x]});
+            if (data.elements[entry].type=="checkbox") {
+                var cell = $("<td>");
+                $(cell).appendTo(row);
+                for (item of value) {
+                    var itemBadge = document.createElement("SPAN");
+                    $(itemBadge).addClass("badge badge-secondary")
+                    .appendTo(cell)
+                    .text(item);
+                }
+            } else {
+                $(row).append($("<td>").text(value));
+            }
         } else {
             value = sub[entry];
+            $(row).append($("<td>").text(value));
         }
-        $(row).append($("<td>").text(value));
     }
     $(tbody).append(row);
 }
