@@ -262,7 +262,7 @@ $(document).ready(function () {
     $("#searchForms").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#form_list h5").filter(function() {
-            $(this).parent().parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            $(this).parent().parent().parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
     
