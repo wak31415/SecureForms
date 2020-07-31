@@ -3,7 +3,6 @@
     include("includes/classes/Survey.php");
     include('includes/form_handlers/submit_response.php');
     
-    
     $survey_id = $_GET['survey_id'];
     $survey = new Survey($con, $survey_id);
 ?>

@@ -1,5 +1,6 @@
 <?php
     include("includes/header.php");
+    include("includes/navbar.php");
     include("includes/classes/User.php");
     include("includes/classes/Survey.php");
     include("includes/handlers.php");

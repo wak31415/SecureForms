@@ -1,6 +1,6 @@
 <?php
     include("includes/header.php");
-
+    include("includes/navbar.php");
 
 ?>
 
@@ -13,6 +13,20 @@
         user accounts and encrypted user data is deleted in our process of contributing
         to a more secure internet. Please do not use this for production purposes!
         It is currently only suited for testing.
+    </div>
+
+    <div class="alert alert-info">
+        <b>Note:</b><br>Even if the website might state otherwise in some locations, this
+        project is <b>not open source yet</b>. The source code will be released once
+        <em>SecureForms</em> has passed the initial testing stages, the code has been cleaned up
+        and an appropriate license is found. It might still take 1-2 months before the
+        source code is published.
+    </div>
+
+    <div class="alert alert-info">
+        <b>Call for contributors:</b><br>
+        We are looking for volunteers who would be willing to help accelerate the development.
+        If you are interested, please send an email to d8f775f4-f4e4-47aa-890e-00e60a22cfa9 [at] aleeas [dot] com
     </div>
 
     <br>

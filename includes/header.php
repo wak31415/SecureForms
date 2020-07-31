@@ -22,32 +22,8 @@
     <script src="js/general_scripts.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/genome" type="text/css"/> 
     <link rel="stylesheet" href="style.css">
     <title>SecureForms</title>
 </head>
 <body>
-
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
-    <a href="info.php" class="navbar-brand">SecureForms</a>
-<?php
-if(isset($_SESSION['email'])) {
-    echo 
-    '   <ul class="nav navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="index.php"><i class="fa fa-home"></i> Dashboard</a></li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fa fa-sign-out"></i> Log out</a></li>
-        </ul>
-    ';
-} else {
-    echo 
-    '   <ul class="nav navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="info.php">How it works</a></li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="register.php">Sign in/Register</a></li>
-        </ul>
-    ';
-}
-?>
-</nav>
