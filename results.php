@@ -92,19 +92,20 @@ $("#submission-count").text(submissions.length);
 var submission_objs = [];
 var summary = {};
 
+for (let k = 0; k < data.elements.length; k++) {
+    summary[k] = {}
+}
 
 for(sub of submissions) {
     var sub_split = sub.split("&");
     var obj = {};
 
-    // initialize response object
-    for(var d_key in sub_split) {
-        var k = Number(sub_split[d_key].split("=")[0]);
-        if (data.elements[k].type == "radio"||data.elements[k].type=="checkbox") {
+    for (let k = 0; k < data.elements.length; k++) {
+        const question = data.elements[k];
+        if (question.type == "radio"||question.type=="checkbox") {
             obj[k] = [];
-            if (!(k in summary)) {
-                summary[k] = {}
-            }
+        } else {
+            obj[k] = "";
         }
     }
 
@@ -314,10 +315,12 @@ for(question of data.elements) {
 $(header).append(row);
 $("#submission_table").append(header);
 
+console.log(submission_objs);
 var tbody = document.createElement("TBODY");
 for(sub of submission_objs) {
     var row = document.createElement("TR");
     for (entry in sub) {
+        console.log(sub,entry);
         var value;
         if (data.elements[entry].type == "radio"||data.elements[entry].type=="checkbox") {
             value = sub[entry].map(function(x) {return data.elements[entry].options[x]});
@@ -326,7 +329,7 @@ for(sub of submission_objs) {
                 $(cell).appendTo(row);
                 for (item of value) {
                     var itemBadge = document.createElement("SPAN");
-                    $(itemBadge).addClass("badge badge-secondary")
+                    $(itemBadge).addClass("badge badge-secondary mr-1")
                     .appendTo(cell)
                     .text(item);
                 }
