@@ -4,6 +4,7 @@
     include("includes/classes/User.php");
     include("includes/classes/Survey.php");
     include("includes/handlers.php");
+    include("includes/redirect.php");
     
     $user = new User($con, $userLoggedIn);
     $survey = new Survey($con, $_GET['survey_id']);

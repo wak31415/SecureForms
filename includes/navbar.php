@@ -12,7 +12,7 @@ if(isset($_SESSION['email'])) {
             <li class="nav-item"><a class="nav-link" href="index.php"><i class="fa fa-home"></i> Dashboard</a></li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fa fa-sign-out"></i> Log out</a></li>
+            <li class="nav-item"><a class="nav-link" id="log-out-link" href="logout.php"><i class="fa fa-sign-out"></i> Log out</a></li>
         </ul>
     ';
 } else {
@@ -27,3 +27,17 @@ if(isset($_SESSION['email'])) {
 }
 ?>
 </nav>
+
+<script>
+$(document).ready(function () {
+    $("#log-out-link").click(function() {
+        var href = this.href;
+        sessionStorage.clear();
+        var cookies = $.cookie();
+        console.log(cookies);
+
+        event.preventDefault();
+        window.open(href,"_self");
+    });
+});
+</script>
