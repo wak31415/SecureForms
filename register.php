@@ -7,22 +7,22 @@
     include('includes/form_handlers/login_handler.php');
     include('includes/form_handlers/register_handler.php');
 ?>
+<div id="register-background" class="container-fluid d-flex align-items-center vh-100 bg-light">
+    <div class="login col-lg-6 mx-auto rounded-lg shadow-lg align-self-center bg-white">
+        <h1 class="text-center m-5 text-primary">SecureForms</h1>
 
-<div class="container">
-    
-    <div class="login bg-light mx-auto rounded-lg">
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs nav-justified">
+        <ul class="nav nav-pills nav-justified mt-3">
             <li class="nav-item">
-                <a class="nav-link <?php if(isset($_SESSION['log_email'])) echo 'active';?>" data-toggle="tab" href="#login">Log In</a>
+                <a class="nav-link <?php if(!isset($_SESSION['reg_email'])) echo 'active';?>" data-toggle="tab" href="#login">Log In</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php if(!isset($_SESSION['log_email'])) echo 'active';?>" data-toggle="tab" href="#register">Register</a>
+                <a class="nav-link <?php if(isset($_SESSION['reg_email'])) echo 'active';?>" data-toggle="tab" href="#register">Register</a>
             </li>
         </ul>
     
         <div class="tab-content">
-            <div id="login" class="tab-pane container <?php if(isset($_SESSION['log_email'])) {echo 'active';} else echo 'fade';?>"><br>
+            <div id="login" class="tab-pane container <?php if(!isset($_SESSION['reg_email'])) {echo 'active';} else echo 'fade';?>"><br>
                 <?php 
                     
                     if(in_array("Email or password incorrect", $error_array)) {
@@ -44,7 +44,7 @@
                 </form>
             </div>
             
-            <div id="register" class="tab-pane container <?php if(!isset($_SESSION['log_email'])) {echo 'active';} else echo 'fade';?>"><br>
+            <div id="register" class="tab-pane container <?php if(isset($_SESSION['reg_email'])) {echo 'active';} else echo 'fade';?>"><br>
                 <?php
                     if(in_array("Email already in use", $error_array)) {
                         echo "<div class='alert alert-danger'>This email is already in use</div>";
