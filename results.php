@@ -23,7 +23,7 @@
     </a> <br><br>
 
     <!-- Nav tabs -->
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-pills nav-justified">
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#summary">Summary</a>
         </li>
@@ -269,7 +269,7 @@ for (q in summary) {
     .appendTo(row);
 
     var container = document.createElement("DIV");
-    $(container).addClass("chart-element-container")
+    $(container).addClass("card shadow-sm chart-element-container")
     .appendTo(col);
 
     var ctx = document.createElement("CANVAS");
