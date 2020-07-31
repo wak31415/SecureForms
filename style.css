@@ -30,3 +30,8 @@
     border: 1px solid rgb(226, 226, 226);
     border-radius: 10px;
 }
+
+.grid-container {
+    display: grid;  
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
